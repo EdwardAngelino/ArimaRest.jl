@@ -6,8 +6,9 @@ module ArimaRest
  using CSV, DataFrames, Plots
  #import Base.Meta
 
- export  restringido
+ export  restringido, grafica, df
  #export  coef, Ψ, k_calc
  include("arimarestringido.jl")
+ include("grafico.jl")
 
 end

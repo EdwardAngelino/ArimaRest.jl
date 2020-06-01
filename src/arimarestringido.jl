@@ -32,7 +32,7 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
     poli = expand(zi*Φ-Θ)
 
     coef=[poli.coeff(L^i) for i in 1:H]
-
+    global coef
     #Calculo de la matriz ZI
 
 #Resuelve algebraicamente las ecuaciones de cada coeficiente
@@ -48,7 +48,7 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
 #using LinearAlgebra
        Ψ=I+zeros(H,H)
        for j=1:H for i=j+1:H Ψ[i,j] = zie[i-j][1] end end
-
+       global Ψ
 #datos conocidos
        #Y=[   12*log(43691.09*1.085/12) - log(3847.741526)-log(3713.569865)-log(3954.616134) - log(3748.112726)    #  2020
 #             12*log(43691.09*1.085*1.06/12)           #  2021
@@ -112,7 +112,7 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
             k_calc=transpose(ey)*inv(C*Ψ*transpose(Ψ)*transpose(C)+U)*ey/σ2
             println("Kcal < χ2\n","$k_calc < $χ2\n")
             k_calc < χ2  # es valida la restriccion
-
+            global k_calc
             #intervalos de confianza
             cov=σ2*Ψ*transpose(Ψ)*transpose(I-A*C)
 
@@ -127,15 +127,8 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
 
             #imprimir en CSV
             CSV.write(salidacsv,  df )     #writeheader=false)
+            global df
 
-            plot(1:20,exp.(df.Irrest),grid=false,
-               ribbon=(exp.(df.Irrest)-exp.(df."I.Inf"),exp.(df."I.Sup")-exp.(df.Irrest)),
-               fillalpha=.2,color="orange",label = "Sin Restricciones")
-
-            plot!(1:20,exp.(df.Restr),grid=false,ribbon=(exp.(df.Restr)-exp.(df."R.Inf"),
-               exp.(df."R.Sup")-exp.(df.Restr)),fillalpha=.3,color="blue",
-               label = "Con Restricciones",title = "Prónosticos exp(val)")
-
-
+            #grafica(df)
             return df
 end
