@@ -3,7 +3,7 @@ module ArimaRest
 # Write your package code here.
  using SymPy
  using LinearAlgebra
- using CSV, DataFrames
+ using CSV, DataFrames, Plots
  #import Base.Meta
 
  export  restringido
