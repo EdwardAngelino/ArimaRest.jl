@@ -1,6 +1,6 @@
 export restringido
 function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64,  #datos del modelo
-                     H::Integer, EYTF::Array, Y::Array, C::Array,    # datos de la restriccion
+                     EYTF::Array, Y::Array, C::Array,    # datos de la restriccion
                      salidacsv::String)
 
 
@@ -12,6 +12,8 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
     z25,z26,z27,z28,z29,z30,z31,z32,z33,z34,z35,z36");  # ψ1
 
     chi2_95 = [3.8415,5.9915,7.8147,9.4877,11.0705,12.5916]
+
+    H = length(EYTF)   #tamaño del vector que se ingreso
 
     # Datos del modelo ARIMA
     #σ2  =  0.0002833  # desviacion
