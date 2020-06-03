@@ -103,7 +103,7 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
             # 1-a, a,/2, za/2 => 0.9,0.05,1.645   0.95,0.025,1.96   0.99,0.005,2.575
             cov0=σ2*Ψ*transpose(Ψ)
             errest0= [real(sqrt(complex(cov0[i,i]))) for i in 1:H];  # raiz negativa por aproximacion...
-
+            global errest0
             Total0 = [EYTF  EYTF-1.645*errest0  EYTF+1.645*errest0]
 
             #Correccion de la proyeccion
@@ -119,6 +119,7 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
             cov=σ2*Ψ*transpose(Ψ)*transpose(I-A*C)
 
             errest= [real(sqrt(complex(cov[i,i]))) for i in 1:H];
+            global errest
             I_sup= TYf+1.645*errest  # 1-a, a,/2, za/2 => 0.9,0.05,1.645   0.95,0.025,1.96   0.99,0.005,2.575
             I_inf= TYf-1.645*errest;
 

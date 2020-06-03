@@ -1,6 +1,10 @@
 # ArimaRest.jl
 ArimaRest.jl es una libreria programada por **Edward Angelino** para poder corregir y ajustar los pronósticos de ARIMA univariantes, con información externa al modelo. Esta información es ingresada como restricciones a los valores unicos o a las agrupaciones de valores (Ejemplo tasas de años en el caso de meses), de esta manera además, se establece una encadenacion temporal. La validacion de las restricciones impuestas se mide atravez del indicador <img src="https://render.githubusercontent.com/render/math?math=K_{calc} < \chi^2_m">, donde <img src="https://render.githubusercontent.com/render/math?math=m"> son los grados de libertad de la restricción. Esta indicador esta relacionado con el intervalo de confianza del pronóstico del modelo ARIMA evaluado.
 
+
+<img src="https://render.githubusercontent.com/render/math?math=\phi\left(L\right)\varPhi\left(L_{s}\right)\nabla^{d}\nabla^{D}\centerdot Z_{t}=\theta\left(L\right)\Theta\left(L_{s}\right)a_{t}">
+
+
 El principal beneficio de restringir las estimaciones es la reduccion de la incertidumbre del modelo, acotando los intervalos de confianza, debido a la informacion adicional y encontrando los  valores intermedios ajustados  que cumplen con la restriccion impuesta.
 
 
@@ -12,11 +16,11 @@ El cálculo es algebraico y matricial, para lo cual se ha creado dos funciones:
 
 donde:
 
-<img src="https://render.githubusercontent.com/render/math?math=eq\nabla"> : Ecuación de retados en funcion de **L**, si tambien tiene componente estacion se muliplica.
+<img src="https://render.githubusercontent.com/render/math?math=eq\nabla"> : Ecuación de retardos en funcion de **L**, si  tiene componente estacional se multiplica.
 
-<img src="https://render.githubusercontent.com/render/math?math=eq\Theta"> : Ecuación de medias moviles del modelo en funcion de **L**.
+<img src="https://render.githubusercontent.com/render/math?math=eq\Theta"> : Ecuación de medias moviles del modelo en función de **L**.
 
-<img src="https://render.githubusercontent.com/render/math?math=eq\Phi"> : Ecuación de autoregresivos del modelo en funcion de **L**
+<img src="https://render.githubusercontent.com/render/math?math=eq\Phi"> : Ecuación de autoregresivos del modelo en función de **L**
 
 <img src="https://render.githubusercontent.com/render/math?math=\sigma^2"> : Desviación estandar al cuadrado del modelo
 
