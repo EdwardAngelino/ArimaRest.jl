@@ -14,7 +14,7 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
     chi2_95 = [3.8415,5.9915,7.8147,9.4877,11.0705,12.5916]
 
     H = length(EYTF)   #tamaño del vector que se ingreso
-
+   global H
     # Datos del modelo ARIMA
     #σ2  =  0.0002833  # desviacion
 

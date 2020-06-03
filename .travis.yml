@@ -24,6 +24,5 @@ after_success:
     julia -e '
       using Pkg
       Pkg.add("Coverage")
-      Pkg.add("SymPy")
       using Coverage
       Codecov.submit(process_folder())'
