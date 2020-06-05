@@ -4,12 +4,13 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
                      salidacsv::String)
 
 
-    L = symbols("L")
+    @syms L ;
 
-    z1,z2,z3,z4,z5,z6,z7,z8,z9,z10,z11,z12,z13,z14,z15,z16,z17,z18,z19,z20,z21,z22,z23,z24,
-    z25,z26,z27,z28,z29,z30,z31,z32,z33,z34,z35,z36   =
-    symbols("z1,z2,z3,z4,z5,z6,z7,z8,z9,z10,z11,z12,z13,z14,z15,z16,z17,z18,z19,z20,z21,z22,z23,z24,
-    z25,z26,z27,z28,z29,z30,z31,z32,z33,z34,z35,z36");  # ψ1
+    # ψ1
+    @syms z1 z2 z3 z4 z5 z6 z7 z8 z9 z10 z11 z12 z13 z14 z15 z16 z17 z18 z19 z20 ;
+    @syms z21 z22 z23 z24 z25 z26 z27 z28 z29 z30 z31 z32 z33 z34 z35 z36 z37 z38 z39 z40;
+    @syms z41 z42 z43 z44 z45 z46 z47 z48 z49 z50 z51 z52 z53 z54 z55 z56 z57 z58 z59 z60;
+
 
     chi2_95 = [3.8415,5.9915,7.8147,9.4877,11.0705,12.5916]
 
@@ -25,6 +26,10 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
     #Φ=(1 - L - ϕ12*L^12)  # aproximacion (1-L)(1-f12*L^12)
     #Φ= (1-L)*(1-ϕ12*L^12)
     Φ= sympify(eqNabla)*sympify(eqPhi)
+
+    eq = Θ/Φ
+    global eq
+
     # definicion del vector zi
     #zi=(1+z1*L+z2*L^2+z3*L^3+z4*L^4+z5*L^5+z6*L^6+z7*L^7+z8*L^8)
     cad="1"; for i=1:H cad = cad * "+z$(i)*L^$(i)" end
