@@ -1,16 +1,22 @@
 export restringido
-function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64,  #datos del modelo
-                     EYTF::Array, Y::Array, C::Array,    # datos de la restriccion
-                     salidacsv::String)
+#function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64,  #datos del modelo
+#                     EYTF::Array, Y::Array, C::Array,    # datos de la restriccion
+#                     salidacsv::String)
 
-
-    @syms L ;
-
+function restringido( datos::Dict   , salidacsv::String)
+    @syms L ;  #B : operador retardo
     # ψ1
     @syms z1 z2 z3 z4 z5 z6 z7 z8 z9 z10 z11 z12 z13 z14 z15 z16 z17 z18 z19 z20 ;
     @syms z21 z22 z23 z24 z25 z26 z27 z28 z29 z30 z31 z32 z33 z34 z35 z36 z37 z38 z39 z40;
     @syms z41 z42 z43 z44 z45 z46 z47 z48 z49 z50 z51 z52 z53 z54 z55 z56 z57 z58 z59 z60;
 
+    #lectura del diccionario
+
+    EYTF = datos[:EYTF]
+    AT = datos[:AT]
+    C= datos[:C]
+    Y = datos[:Y]
+    σ2 = datos[:sigma2]
 
     chi2_95 = [3.8415,5.9915,7.8147,9.4877,11.0705,12.5916]
 
@@ -21,11 +27,12 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
 
     #Ecuacion de regresion
     #Θ=1-θ1*L
-    Θ=sympify(eqTheta)
+
+    Θ=datos[:eqtheta]
 
     #Φ=(1 - L - ϕ12*L^12)  # aproximacion (1-L)(1-f12*L^12)
     #Φ= (1-L)*(1-ϕ12*L^12)
-    Φ= sympify(eqNabla)*sympify(eqPhi)
+    Φ= datos[:eqDiff]*datos[:eqphi]
 
     eq = Θ/Φ
     global eq
@@ -57,22 +64,9 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
        for j=1:H for i=j+1:H Ψ[i,j] = zie[i-j][1] end end
        global Ψ
 #datos conocidos
-       #Y=[   12*log(43691.09*1.085/12) - log(3847.741526)-log(3713.569865)-log(3954.616134) - log(3748.112726)    #  2020
-#             12*log(43691.09*1.085*1.06/12)           #  2021
-#       ]
 
        χ2 = chi2_95[length(Y)]  # chi cuadrada  para 3
 
-#       C = [1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0
-#            0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1
-#            ]
-
-            #incertidumbre
-            #4.5%/6% = 3/4 entonces la nueva tasa objetivo 2.6% = 3.4%*3/4 (3.4% es lo que se obtiene sin restriccion)
-            #Pr{Y1 < 0.045} = 0.95 la probabilidad que sea menor de 4.5%
-
-            #uu = symbols("uu")
-            #u1 = solve(0.045-0.026-1.645*uu^0.5,uu)  #en el texto de victor guerrero 0.00014
 
             U = zeros(length(Y),length(Y));
 
@@ -80,32 +74,6 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
 
             A=(Ψ*transpose(Ψ))*transpose(C)*inv(C*Ψ*transpose(Ψ)*transpose(C)+U)
 
-            #datos inician en mayo 2020 = N+1
-            #EYTF = [
-            #8.244000196
-            #8.203459715
-            #8.22613888
-            #8.227831797
-            #8.196449529
-            #8.250765523
-            #8.23644938
-            #8.272428234
-            #8.284801839
-            #8.253954031
-            #8.30861364
-            #8.262003317
-            #8.275033116
-            #8.239797668
-            #8.259508535
-            #8.260979687
-            #8.233704219
-            #8.280911853
-            #8.268469169
-            #8.29973947
-            #]
-
-            #Intervalo de confianza sin restricciones 90%
-            # 1-a, a,/2, za/2 => 0.9,0.05,1.645   0.95,0.025,1.96   0.99,0.005,2.575
             cov0=σ2*Ψ*transpose(Ψ)
             errest0= [real(sqrt(complex(cov0[i,i]))) for i in 1:H];  # raiz negativa por aproximacion...
             global errest0
@@ -133,10 +101,10 @@ function restringido(eqNabla::String,eqTheta::String,eqPhi::String, σ2::Float64
             header = ["Irrest", "I.Inf", "I.Sup","Restr", "R.Inf", "R.Sup"]
             rename!(df,header)
 
+            df=df.+AT
             #imprimir en CSV
             CSV.write(salidacsv,  df )     #writeheader=false)
             global df
 
-            #grafica(df)
             return df
 end
