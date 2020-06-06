@@ -8,36 +8,68 @@ ArimaRest.jl es una libreria programada por **Edward Angelino** para poder corre
 El principal beneficio de restringir las estimaciones es la reduccion de la incertidumbre del modelo, acotando los intervalos de confianza, debido a la informacion adicional y encontrando los  valores intermedios ajustados  que cumplen con la restriccion impuesta.
 
 
-El cálculo es algebraico y matricial, para lo cual se ha creado dos funciones:
 
+
+El cálculo es algebraico y matricial, para lo cual se ha creado  funciones de lectura, proceso y grafico:
 
 --
-<img src="https://render.githubusercontent.com/render/math?math=restringe(eq\nabla, eq\Theta,eq\Phi,\sigma^2,EY_{tf},Y,C,out)">
+
+<img src="https://render.githubusercontent.com/render/math?math=dic=leedatostxt(archivo)">
 
 donde:
 
-<img src="https://render.githubusercontent.com/render/math?math=eq\nabla"> : Ecuación de retardos en funcion de **L**, si  tiene componente estacional se multiplica.
+<img src="https://render.githubusercontent.com/render/math?math=dic"> : Variable del tipo Dic donde se almacenara toda la informacion del archivo texto.
 
-<img src="https://render.githubusercontent.com/render/math?math=eq\Theta"> : Ecuación de medias moviles del modelo en función de **L**.
+<img src="https://render.githubusercontent.com/render/math?math=archivo"> : Archivo de texto plano donde se ingresan los datos para el cálculo. Tiene el siguiente formato:
 
-<img src="https://render.githubusercontent.com/render/math?math=eq\Phi"> : Ecuación de autoregresivos del modelo en función de **L**
+	#Datos_Modelo
+	diff  = (1-L)*(1-L^12)
+	theta = (1-0.213503*L-0.210997*L^2)*(1-0.903785*L^12)
+	phi = 1
+	sigma2 = 0.011956^2   # soporta operaciones apesar que es un numero
 
-<img src="https://render.githubusercontent.com/render/math?math=\sigma^2"> : Desviación estandar al cuadrado del modelo
+	#Objetivos
+	C = [
+     1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+     0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0
+     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 ]
 
-<img src="https://render.githubusercontent.com/render/math?math=EY_{tf}"> :  Valores del pronóstico que se van a restringir o modificar.
+	Y = [
+	  12*log(42803.322445*1.0294/12) - 41.01134993     #  2020 - ene:may2020
+      12*log(42803.322445*1.0294*1.0061/12)            #  2021
+      12*log(42803.322445*1.0294*1.0061*1.0367/12)  ]  #  2022
 
-<img src="https://render.githubusercontent.com/render/math?math=Y"> :  Vector de objetivos de tal manera que se cumple la ecuación   <img src="https://render.githubusercontent.com/render/math?math=CZ_F=Y">
+	#Datos a ajustar  [serie_sa atipicos]
+	seriesf = [
+		8.154973727	-0.211095349
+		8.18563597	-0.159745649
+		8.19698976	-0.12380086
+		8.175109724	-0.098639507
+		8.21674547	-0.08102656
+		8.200111952	-0.068697497
+		...          	.....
+		8.277733291	-0.039935196
+		8.316698287	-0.039933542]
 
-<img src="https://render.githubusercontent.com/render/math?math=C"> : Vector que multiplica a los resultados de tal forma que se cumple la ecuación <img src="https://render.githubusercontent.com/render/math?math=CZ_F=Y">
 
-<img src="https://render.githubusercontent.com/render/math?math=out"> : archivo .csv de salida
+
+
+--
+
+<img src="https://render.githubusercontent.com/render/math?math=df=restringe(datos,salida)">
+
+donde:
+
+<img src="https://render.githubusercontent.com/render/math?math=datos"> : variable Dic que contiene  los datos para el cálculo
+
+<img src="https://render.githubusercontent.com/render/math?math=salida"> : archivo .csv de salida
 
 --
 <img src="https://render.githubusercontent.com/render/math?math=grafica(dt,f)">
 
   donde:
 
-<img src="https://render.githubusercontent.com/render/math?math=dt">  :  DataFrame que contiene los resultados del	cálculo <img src="https://render.githubusercontent.com/render/math?math=[Irrest, I.Inf, I.Sup,Restr, R.Inf, R.Sup]">
+<img src="https://render.githubusercontent.com/render/math?math=dt">  :  DataFrame que contiene los resultados del cálculo sin considerar atipicos <img src="https://render.githubusercontent.com/render/math?math=[Irrest, I.Inf, I.Sup,Restr, R.Inf, R.Sup]">
 
 <img src="https://render.githubusercontent.com/render/math?math=f">  :  flag que permite graficar 1:en Log y 0:en niveles.
 
