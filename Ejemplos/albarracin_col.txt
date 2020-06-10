@@ -1,0 +1,19 @@
+#Datos_albarracin apliacion colombia
+diff  = 1
+theta = (1+0.936804*L^4)
+phi = (1-2*L+L^2+0.911294*L+0.479707*L^2)
+sigma2 = 0.0140^2   #asumido
+
+#Objetivos 
+C = [ -1 0 0 1]     
+
+# Y  al nivel de datos de seriesf, si atipicos   (Estimacion con PBI IPE)
+Y = [   log(1.025)     ]   
+
+#Datos a ajustar  (serie sin atipicos , atipicos)
+seriesf = [
+18.0932 0
+18.0962 0
+18.1070 0
+18.1163 0
+]

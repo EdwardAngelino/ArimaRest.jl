@@ -1,0 +1,21 @@
+#Datos_albarracin 2.1
+diff  = 1
+theta = (1-0.8*L)
+phi = (1-0.9*L)
+sigma2 = 0.0140^2   
+
+#Objetivos 
+C = [ 0 0 0 1 
+	 -1 0 0 1]     
+
+# Y  al nivel de datos de seriesf, si atipicos   (Estimacion con PBI IPE)
+Y = [   log(1750000) 
+        log(1.045)     ]   
+
+#Datos a ajustar  (serie sin atipicos , atipicos)
+seriesf = [
+14.31590292	0
+14.34143128	0
+14.31533849	0
+14.37558024	0
+]

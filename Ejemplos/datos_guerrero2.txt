@@ -1,0 +1,23 @@
+#Datos_Modelo Guerrero 1
+diff  = (1-L)*(1-L^4)
+theta = (1-0.5875*L^4)
+phi = (1+0.2948*L)
+sigma2 = 0.0140^2   
+
+#Objetivos 
+C = [ 0 0 0 1 0 0 0 0]     
+
+# Y  al nivel de datos de seriesf, si atipicos   (Estimacion con PBI IPE)
+Y = [   log(1.045) + log(1657487.0)     ]   
+
+#Datos a ajustar  (serie sin atipicos , atipicos)
+seriesf = [
+14.31590292	0
+14.34143128	0
+14.31533849	0
+14.37558024	0
+14.36644293	0
+14.39321759	0
+14.36675731	0
+14.42710744	0
+]
