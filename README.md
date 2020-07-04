@@ -5,6 +5,12 @@ ArimaRest.jl es una libreria programada por **Edward Angelino** para poder corre
 <img src="https://render.githubusercontent.com/render/math?math=\phi\left(L\right)\varPhi\left(L_{s}\right)\nabla^{d}\nabla^{D}\centerdot Z_{t}=\theta\left(L\right)\Theta\left(L_{s}\right)a_{t}">
 
 
+<img src="https://render.githubusercontent.com/render/math?math=\begin{multline*}
+\left(1-\phi_{1}L-\phi_{2}L^{2}-...-\phi_{p}L^{p}\right)\left(1-\varPhi_{1}L_{s}-\varPhi_{2}L_{s}^{2}-...-\varPhi_{P}L_{s}^{P}\right)\left(1-L\right)^{d}\left(1-L^{s}\right)^{D}Z_{t}\\
+=\left(1\dotplus\theta_{1}L\dotplus\theta_{2}L^{2}\dotplus...\dotplus\theta_{q}L^{q}\right)\left(1\dotplus\Theta_{1}L_{s}\dotplus\Theta_{2}L_{s}^{2}\dotplus...\dotplus\Theta_{Q}L_{s}^{Q}\right)a_{t}
+\end{multline*}">
+
+
 El principal beneficio de restringir las estimaciones es la reduccion de la incertidumbre del modelo, acotando los intervalos de confianza, debido a la informacion adicional y encontrando los  valores intermedios ajustados  que cumplen con la restriccion impuesta.
 
 
