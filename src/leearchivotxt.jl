@@ -10,6 +10,7 @@ function leedatostxt(archivo::String   )
     i=findall(x->x=="phi", data)[][1] ;
     eqphi=sympify(data[i,2])
     i=findall(x->x=="sigma2", data)[][1] ;
+    data[i,2]= string(data[i,2])       #add bugg  
     sigma2= eval(Meta.parse(data[i,2]));
 
 
@@ -31,6 +32,7 @@ function leedatostxt(archivo::String   )
     i=findall(x->x=="Y", data)[][1]
     rstrip(lstrip(data[i,2])) != "[" ? data[i]=lstrip(rstrip(lstrip(data[i,2])),'[') : i +=1
     while (isempty(findall(x->x==']', data[i])))
+        data[i]= string(data[i])       #add bugg  
         t = eval(Meta.parse(data[i]))  #solo este vector puede leer operaciones
         push!(Y,t)
         i += 1
