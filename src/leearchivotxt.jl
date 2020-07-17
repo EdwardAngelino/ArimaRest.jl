@@ -38,7 +38,7 @@ function leedatostxt(archivo::String   )
         i += 1
     end
     t = eval(Meta.parse(rstrip(data[i],']')))
-    !(isempty(findall(x->x==']', data[i])))  && !isnothing(t) ?  push!(Y,t)  : 0
+    !(isempty(findall(x->x==']', data[i])))  && !isempty(t) ?  push!(Y,t)  : 0
 
 
     EYTF=[]; AT=[];
