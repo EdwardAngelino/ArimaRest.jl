@@ -97,7 +97,7 @@ function restringido( datos::Dict   , salidacsv::String)
             I_inf= TYf-1.645*errest;
 
             TotalR = [TYf  I_inf  I_sup]
-            df = DataFrame([Total0 TotalR])
+            df = DataFrame([Total0 TotalR],:auto)
             header = ["Irrest", "I.Inf", "I.Sup","Restr", "R.Inf", "R.Sup"]
             rename!(df,header)
 
