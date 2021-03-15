@@ -1,7 +1,7 @@
 name = "ArimaRest"
 uuid = "81efb3f7-2817-4a8b-857b-afff3807cc0b"
 authors = ["Edward Angelino"]
-version = "0.2.0"
+version = "1.2"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
